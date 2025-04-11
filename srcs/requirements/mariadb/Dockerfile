@@ -11,4 +11,3 @@ RUN chmod +x /mariadb_init.sh
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 CMD ["/mariadb_init.sh"]
-# RUN systemctl enable mariadb && systemctl start mariadb
