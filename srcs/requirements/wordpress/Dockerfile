@@ -14,6 +14,11 @@ RUN tar -xzvf latest.tar.gz && rm latest.tar.gz && cp -rf wordpress/* . && rm -r
 RUN chown -R root:root /var/www/html
 # WORKDIR /
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY tools/wordpress_init.sh /wordpress_init.sh
+
 
 EXPOSE 9000
 
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+CMD ["/wordpress_init.sh"]
