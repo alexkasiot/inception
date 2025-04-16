@@ -5,7 +5,7 @@ MYSQL_ROOT_PASSWORD=$(cat run/secrets/wp_mysql_root_password)
 
 service mariadb start
 
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_NAME}\`;"
 
 mysql -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 

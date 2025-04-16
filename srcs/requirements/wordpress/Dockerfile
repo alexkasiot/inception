@@ -15,6 +15,7 @@ RUN chown -R root:root /var/www/html
 # WORKDIR /
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY tools/wordpress_init.sh /wordpress_init.sh
+RUN chmod +x /wordpress_init.sh
 
 
 EXPOSE 9000
