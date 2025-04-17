@@ -12,8 +12,12 @@ volume_dirs:
 	mkdir -p /home/${USER}/data/mariadb
 	mkdir -p /home/${USER}/data/wordpress
 
-clean:
+down:
 	docker compose down
+
+clean_host_volumes:
+	sudo rm -rf /home/${USER}/data/mariadb/*
+	sudo rm -rf /home/${USER}/data/wordpress/*
 
 fclean: clean
 	rm -rf secrets
