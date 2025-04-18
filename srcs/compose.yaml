@@ -71,8 +71,8 @@ networks:
 
 secrets:
  wp_mysql_password:
-  file: ./secrets/wp_mysql_password.txt
+  file: ./.secrets/wp_mysql_password.txt
  wp_mysql_root_password:
-  file: ./secrets/wp_mysql_root_password.txt
+  file: ./.secrets/wp_mysql_root_password.txt
  wp_admin_password:
-  file: ./secrets/wp_admin_password.txt
+  file: ./.secrets/wp_admin_password.txt
