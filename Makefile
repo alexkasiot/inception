@@ -37,7 +37,7 @@ up_build:
 	cd srcs && docker compose up --build
 
 down:
-	docker compose down
+	cd srcs && docker compose down
 
 down_volumes:
 	cd srcs && docker compose down -v 2>/dev/null || true
