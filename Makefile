@@ -33,6 +33,9 @@ volume_dirs: ${MB_VOLUME} ${WP_VOLUME}
 up:
 	cd srcs && docker compose up
 
+up_build:
+	cd srcs && docker compose up --build
+
 down:
 	docker compose down
 
