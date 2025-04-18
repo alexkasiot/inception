@@ -2,7 +2,7 @@ SECRETS:= ./srcs/.secrets
 MB_VOLUME:= /home/${USER}/data/mariadb
 WP_VOLUME:= /home/${USER}/data/wordpress
 ENV_FILE:= ./srcs/.env
-VARS_INIT_SH:= ./vars_init.sh
+VARS_INIT_SH:= ./srcs/vars_init.sh
 
 all: secrets volume_dirs ${ENV_FILE} ${VARS_INIT_SH}
 
@@ -17,19 +17,9 @@ secrets: ${SECRETS}
 
 ${ENV_FILE}:
 	touch ${ENV_FILE}
-	echo "DOMAIN_NAME=\n" >> ${ENV_FILE}
-	echo "# Database" >> ${ENV_FILE}
-	echo "MYSQL_NAME=" >> ${ENV_FILE}
-	echo "MYSQL_USER=\n" >> ${ENV_FILE}
-	echo "# Wordpress" >> ${ENV_FILE}
-	echo "WP_DB_NAME=${MYSQL_NAME}" >> ${ENV_FILE}
-	echo "WP_DB_USER=${MYSQL_USER}" >> ${ENV_FILE}
-	echo "WP_DB_HOST=mariadb:3306" >> ${ENV_FILE}
-	echo "WP_ADMIN_USER=" >> ${ENV_FILE}
-	echo "# WP_ADMIN_EMAIL=\n" >> ${ENV_FILE}
 
 ${VARS_INIT_SH}:
-	cp ./vars_init_example.sh ${VARS_INIT_SH}
+	cp ./srcs/vars_init_example.sh ${VARS_INIT_SH}
 	chmod +x ${VARS_INIT_SH}
 
 ${MB_VOLUME}:
@@ -47,16 +37,18 @@ down:
 	docker compose down
 
 down_volumes:
-	cd srcs && docker compose down -v
+	cd srcs && docker compose down -v 2>/dev/null || true
 
-clean_host_volumes:
+clean_host_volumes: down_volumes
 	sudo rm -rf ${MB_VOLUME}
 	sudo rm -rf ${WP_VOLUME}
 
-f_super_clean: down_volumes clean_host_volumes 
-	sudo rm -rf ${SECRETS}
-	sudo rm -f ${ENV_FILE}
+fclean: clean_host_volumes
+	rm -rf ${SECRETS}
+	rm -f ${ENV_FILE}
+
+f_super_clean: fclean 
 	sudo rm -f ${VARS_INIT_SH}
 
-.PHONY: all secrets volume_dirs up down down_volumes clean_host_volumes clean f_super_clean
+.PHONY: all secrets volume_dirs up down down_volumes clean_host_volumes fclean f_super_clean
 
