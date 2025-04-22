@@ -25,7 +25,8 @@ ini_set('display_errors', 1);
 echo "Debug information:<br>";
 echo "WP_DB_NAME: " . getenv('WP_DB_NAME') . "<br>";
 echo "WP_DB_USER: " . getenv('WP_DB_USER') . "<br>";
-echo "WP_DB_PASSWORD: " . (getenv('WP_DB_PASSWORD') ? "Set" : "Not set") . "<br>";
+// echo "WP_DB_PASSWORD: " . (getenv('WP_DB_PASSWORD') ? "Set" : "Not set") . "<br>";
+echo "WP_DB_PASSWORD: " . getenv('WP_DB_PASSWORD') . "<br>";
 echo "WP_DB_HOST: " . getenv('WP_DB_HOST') . "<br>";
 echo "WP_DB_HOST (with $): " . getenv('$WP_DB_HOST') . "<br>";
 

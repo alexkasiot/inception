@@ -1,9 +1,9 @@
 services:
- mariadb:
-  build: ./requirements/mariadb/
-   # context: ./requirements/mariadb/
-   # dockerfile: Dockerfile
-  container_name: mariadb #_inception_akasiota
+ mariadb_inception:
+  image: mariadb_inception
+  build:
+   context: ./requirements/mariadb/
+   dockerfile: Dockerfile
   restart: no
   expose:
    - "3306"
@@ -17,32 +17,36 @@ services:
   networks:
    - inception_net_ak
        
- wordpress:
-   build: ./requirements/wordpress
-   container_name: wordpress #_inception_akasiota
-   restart: no
-   depends_on:
-    mariadb:
-     condition: service_started
-     restart: true
-   expose:
-    - "9000"
-   secrets:
-    - wp_mysql_password
-    - wp_admin_password
-   env_file:
-    - .env
-   volumes:
-    - wp_volume:/var/www/html
-   networks:
-    - inception_net_ak
- 
- nginx:
-  build: ./requirements/nginx/
-  container_name: nginx #_inception_akasiota
+ wordpress_inception:
+  image: wordpress_inception
+  build:
+   context: ./requirements/wordpress
+   dockerfile: Dockerfile
   restart: no
   depends_on:
-   wordpress:
+    mariadb_inception:
+      condition: service_started
+      restart: true
+  expose:
+  - "9000"
+  secrets:
+  - wp_mysql_password
+  - wp_admin_password
+  env_file:
+  - .env
+  volumes:
+  - wp_volume:/var/www/html
+  networks:
+  - inception_net_ak
+ 
+ nginx_inception:
+  image: nginx_inception
+  build:
+   context: ./requirements/nginx/
+   dockerfile: Dockerfile
+  restart: no
+  depends_on:
+   wordpress_inception:
     condition: service_started
     restart: true
   ports:
