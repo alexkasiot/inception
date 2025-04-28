@@ -3,8 +3,12 @@
 WP_DB_PASSWORD=$(cat /run/secrets/wp_mysql_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 
+export DOMAIN_NAME
 export WP_DB_PASSWORD
 export WP_ADMIN_PASSWORD
+export WP_DB_NAME
+export WP_DB_USER
+export WP_DB_HOST
 
 mkdir -p /run/php/
 

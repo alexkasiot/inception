@@ -1,82 +1,82 @@
 services:
- mariadb_inception:
-  image: mariadb_inception
-  build:
-   context: ./requirements/mariadb/
-   dockerfile: Dockerfile
-  restart: no
-  expose:
-   - "3306"
-  secrets:
-   - wp_mysql_password
-   - wp_mysql_root_password
-  env_file:
-   - .env
-  volumes:
-   - mysql_volume:/var/lib/mysql
-  networks:
-   - inception_net_ak
+  mariadb_inception:
+    image: mariadb_inception
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: Dockerfile
+    restart: no
+    expose:
+      - "3306"
+    secrets:
+      - wp_mysql_password
+      - wp_mysql_root_password
+    env_file:
+      - .env
+    volumes:
+      - mysql_volume:/var/lib/mysql
+    networks:
+      - inception_net_ak
        
- wordpress_inception:
-  image: wordpress_inception
-  build:
-   context: ./requirements/wordpress
-   dockerfile: Dockerfile
-  restart: no
-  depends_on:
-    mariadb_inception:
-      condition: service_started
-      restart: true
-  expose:
-  - "9000"
-  secrets:
-  - wp_mysql_password
-  - wp_admin_password
-  env_file:
-  - .env
-  volumes:
-  - wp_volume:/var/www/html
-  networks:
-  - inception_net_ak
+  wordpress_inception:
+    image: wordpress_inception
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    restart: no
+    depends_on:
+      mariadb_inception:
+        condition: service_started
+        restart: true
+    expose:
+      - "9000"
+    secrets:
+      - wp_mysql_password
+      - wp_admin_password
+    env_file:
+      - .env
+    volumes:
+      - wp_volume:/var/www/html
+    networks:
+      - inception_net_ak
  
- nginx_inception:
-  image: nginx_inception
-  build:
-   context: ./requirements/nginx/
-   dockerfile: Dockerfile
-  restart: no
-  depends_on:
-   wordpress_inception:
-    condition: service_started
-    restart: true
-  ports:
-   - "443:443"
-  volumes:
-   - wp_volume:/var/www/html
-  networks:
-   - inception_net_ak
+  nginx_inception:
+    image: nginx_inception
+    build:
+      context: ./requirements/nginx/
+      dockerfile: Dockerfile
+    restart: no
+    depends_on:
+      wordpress_inception:
+        condition: service_started
+        restart: true
+    ports:
+      - "443:443"
+    volumes:
+      - wp_volume:/var/www/html
+    networks:
+      - inception_net_ak
 
 volumes:
- mysql_volume:
-  driver: local
-  driver_opts:
-   type: none
-   device: /home/${USER}/data/mariadb
-   o: bind
- wp_volume:
-  driver: local
-  driver_opts:
-   type: none
-   device: /home/${USER}/data/wordpress
-   o: bind
+  mysql_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/mariadb
+      o: bind
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/wordpress
+      o: bind
 
 networks:
- inception_net_ak:
+  inception_net_ak:
 
 secrets:
- wp_mysql_password:
-  file: ./.secrets/wp_mysql_password.txt
- wp_mysql_root_password:
-  file: ./.secrets/wp_mysql_root_password.txt
- wp_admin_password:
-  file: ./.secrets/wp_admin_password.txt
+  wp_mysql_password:
+    file: ./.secrets/wp_mysql_password.txt
+  wp_mysql_root_password:
+    file: ./.secrets/wp_mysql_root_password.txt
+  wp_admin_password:
+    file: ./.secrets/wp_admin_password.txt
