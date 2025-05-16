@@ -4,7 +4,7 @@ services:
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
-    restart: no
+    restart: unless-stopped
     # expose:
     #   - "3306"
     secrets:
@@ -22,7 +22,7 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    restart: no
+    restart: unless-stopped
     depends_on:
       mariadb_inception:
         condition: service_started
@@ -45,7 +45,7 @@ services:
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
-    restart: no
+    restart: unless_stopped
     depends_on:
       wordpress_inception:
         condition: service_started
@@ -62,13 +62,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/mariadb
+      device: ${HOME}/data/mariadb
       o: bind
   wp_volume:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/wordpress
+      device: ${HOME}/data/wordpress
       o: bind
 
 networks:

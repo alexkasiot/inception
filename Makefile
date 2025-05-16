@@ -1,6 +1,6 @@
 SECRETS:= ./srcs/.secrets
-MB_VOLUME:= /home/${USER}/data/mariadb
-WP_VOLUME:= /home/${USER}/data/wordpress
+MB_VOLUME:= ${HOME}/data/mariadb
+WP_VOLUME:= ${HOME}/data/wordpress
 ENV_FILE:= ./srcs/.env
 VARS_INIT_SH:= ./srcs/vars_init.sh
 
@@ -32,7 +32,7 @@ ${WP_VOLUME}:
 volume_dirs: ${MB_VOLUME} ${WP_VOLUME}
 
 up:
-	./srcs/vars_init.sh && \
+	${VARS_INIT_SH} && \
 	cd srcs && docker compose up
 
 up_build:

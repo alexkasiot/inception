@@ -4,15 +4,8 @@ WP_DB_PASSWORD=$(cat /run/secrets/wp_mysql_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_BASIC_PASSWORD=$(cat /run/secrets/wp_basic_password)
 
+# Allow mariadb to start, will implement a better fix, doesn't really matter in this project
 sleep 5
-
-# export DOMAIN_NAME
-# export WP_DB_PASSWORD
-# export WP_ADMIN_PASSWORD
-# export WP_ADMIN_USER
-# export WP_DB_NAME
-# export WP_DB_USER
-# export WP_DB_HOST
 
 FILE=/var/www/html/wp-config.php
 if [ ! -f "$FILE" ];  then
@@ -40,8 +33,6 @@ fi
 
 mkdir -p /run/php/
 
-# echo $WP_DB_NAME
-# echo $WP_DB_USER
 chown -R www-data:www-data /var/www/html
 
 exec php-fpm7.4 -F

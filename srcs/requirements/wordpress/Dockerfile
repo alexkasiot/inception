@@ -27,5 +27,3 @@ EXPOSE 9000
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 CMD ["/wordpress_init.sh"]
-
-# CMD ["sh", "-c", "ls -la / | grep wordpress_init.sh && ls -la /wordpress_init.sh && /wordpress_init.sh"]
