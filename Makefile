@@ -14,6 +14,7 @@ secrets: ${SECRETS}
 	sudo touch ${SECRETS}/wp_mysql_password.txt
 	sudo touch ${SECRETS}/wp_mysql_root_password.txt
 	sudo touch ${SECRETS}/wp_admin_password.txt
+	sudo touch ${SECRETS}/wp_basic_password.txt
 
 ${ENV_FILE}:
 	touch ${ENV_FILE}
@@ -31,6 +32,7 @@ ${WP_VOLUME}:
 volume_dirs: ${MB_VOLUME} ${WP_VOLUME}
 
 up:
+	./srcs/vars_init.sh && \
 	cd srcs && docker compose up
 
 up_build:
@@ -39,7 +41,7 @@ up_build:
 down:
 	cd srcs && docker compose down
 
-down_volumes:
+down_volumes: down
 	cd srcs && docker compose down -v 2>/dev/null || true
 
 clean_host_volumes: down_volumes

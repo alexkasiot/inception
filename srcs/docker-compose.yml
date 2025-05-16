@@ -32,6 +32,7 @@ services:
     secrets:
       - wp_mysql_password
       - wp_admin_password
+      - wp_basic_password
     env_file:
       - .env
     volumes:
@@ -80,3 +81,5 @@ secrets:
     file: ./.secrets/wp_mysql_root_password.txt
   wp_admin_password:
     file: ./.secrets/wp_admin_password.txt
+  wp_basic_password:
+    file: ./.secrets/wp_basic_password.txt
