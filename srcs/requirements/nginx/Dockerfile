@@ -6,6 +6,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y install nginx \
 	vim \
 	curl \
 	openssl \
+	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /etc/nginx/ssl
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt \

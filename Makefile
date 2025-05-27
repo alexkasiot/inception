@@ -36,6 +36,7 @@ up:
 	cd srcs && docker compose up
 
 up_build:
+	${VARS_INIT_SH} && \
 	cd srcs && docker compose up --build
 
 down:
