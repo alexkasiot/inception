@@ -5,6 +5,8 @@ services:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
     restart: unless-stopped
+    # expose:
+    #   - "3306"
     secrets:
       - wp_mysql_password
       - wp_mysql_root_password
@@ -25,6 +27,8 @@ services:
       mariadb_inception:
         condition: service_started
         restart: true
+    # expose:
+    #   - "9000"
     secrets:
       - wp_mysql_password
       - wp_admin_password
@@ -41,7 +45,7 @@ services:
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
-    restart: unless-stopped
+    restart: unless_stopped
     depends_on:
       wordpress_inception:
         condition: service_started

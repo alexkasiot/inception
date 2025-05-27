@@ -17,6 +17,7 @@ RUN tar -xzvf latest.tar.gz && rm latest.tar.gz && cp -rf wordpress/* . && rm -r
 RUN chown -R root:root /var/www/html
 WORKDIR /
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+# COPY conf/wp-config.php	/var/www/html/wp-config.php
 COPY tools/wordpress_init.sh /wordpress_init.sh
 RUN chmod +x /wordpress_init.sh
 
