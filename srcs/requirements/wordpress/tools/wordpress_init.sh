@@ -5,7 +5,7 @@ WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_BASIC_PASSWORD=$(cat /run/secrets/wp_basic_password)
 
 # Allow mariadb to start, will implement a better fix, doesn't really matter in this project
-sleep 5
+# sleep 10
 
 FILE=/var/www/html/wp-config.php
 if [ ! -f "$FILE" ];  then
