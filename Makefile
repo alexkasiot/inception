@@ -8,7 +8,6 @@ all: secrets volume_dirs ${ENV_FILE} ${VARS_INIT_SH}
 
 ${SECRETS}:
 	mkdir -p ${SECRETS}
-	# chmod 600 ${SECRETS}
 
 secrets: ${SECRETS}
 	sudo touch ${SECRETS}/wp_mysql_password.txt
@@ -56,5 +55,9 @@ fclean: clean_host_volumes
 f_super_clean: fclean 
 	sudo rm -f ${VARS_INIT_SH}
 
-.PHONY: all secrets volume_dirs up down down_volumes clean_host_volumes fclean f_super_clean
+re: fclean all up
+
+re_build: fclean all up_build
+
+.PHONY: all secrets volume_dirs up down down_volumes clean_host_volumes fclean f_super_clean re re_build
 
