@@ -15,6 +15,12 @@ services:
       - mysql_volume:/var/lib/mysql
     networks:
       - inception_net_ak
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
        
   wordpress_inception:
     image: wordpress_inception
@@ -25,7 +31,7 @@ services:
     restart: unless-stopped
     depends_on:
       mariadb_inception:
-        condition: service_started
+        condition: service_healthy
         restart: true
     secrets:
       - wp_mysql_password
